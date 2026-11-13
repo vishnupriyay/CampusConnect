@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration | CampusConnect</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #eef6ff;
+            margin: 0;
+            padding: 20px;
+            color: #243047;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 700px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(38, 83, 130, 0.10);
+            border: 1px solid #c9dff5;
+        }
+
+        h1 {
+            text-align: center;
+            color: #1769aa;
+            margin: 0 0 25px;
+        }
+
+        .form-group {
+            margin-bottom: 17px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        input[type="email"],
+        input[type="number"],
+        input[type="tel"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #a9c6e3;
+            border-radius: 5px;
+            background: #f8fbff;
+            font-size: 14px;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #2196f3;
+            background: #fff;
+        }
+
+        textarea {
+            height: 80px;
+            resize: vertical;
+        }
+
+        .password-wrapper {
+            display: flex;
+            width: 100%;
+        }
+
+        .password-wrapper input {
+            flex: 1;
+            min-width: 0;
+            border-radius: 5px 0 0 5px;
+        }
+
+        .toggle-password {
+            padding: 0 13px;
+            border: 1px solid #a9c6e3;
+            border-left: none;
+            border-radius: 0 5px 5px 0;
+            background: #e3effc;
+            cursor: pointer;
+            font-size: 18px;
+        }
+
+        .toggle-password:hover {
+            background: #d0e4fa;
+        }
+
+        .radio-group {
+            margin-top: 5px;
+        }
+
+        .radio-group label {
+            display: inline-block;
+            font-weight: normal;
+            margin-right: 15px;
+        }
+
+        .radio-group input {
+            margin-right: 4px;
+        }
+
+        .hint {
+            display: block;
+            margin-top: 5px;
+            font-size: 12px;
+            line-height: 1.5;
+            color: #64748b;
+        }
+
+        .buttons {
+            text-align: center;
+            margin-top: 24px;
+        }
+
+        input[type="submit"],
+        input[type="reset"] {
+            padding: 11px 25px;
+            margin: 5px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        input[type="submit"] {
+            background: #1976d2;
+            color: white;
+        }
+
+        input[type="submit"]:hover {
+            background: #125ca1;
+        }
+
+        input[type="reset"] {
+            background: #dce6f1;
+            color: #222;
+        }
+
+        input[type="reset"]:hover {
+            background: #c5d5e5;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            color: #555;
+        }
+
+        .login-link a {
+            color: #1769aa;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+
+    <h1>Student Registration Form</h1>
+
+    <form id="registrationForm"
+          action="signup.jsp"
+          method="post"
+          onsubmit="return validateForm()">
+
+        <div class="form-group">
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="firstName"
+                   placeholder="Enter first name"
+                   autocomplete="given-name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName"
+                   placeholder="Enter last name"
+                   autocomplete="family-name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="rollNumber">Roll Number / Username:</label>
+            <input type="text" id="rollNumber" name="rollNumber"
+                   placeholder="Example: 24761A0511"
+                   maxlength="10"
+                   autocomplete="username"
+                   required>
+            <small class="hint">
+                Format: 24761A05 followed by exactly two digits.
+            </small>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <div class="password-wrapper">
+                <input type="password" id="password" name="password"
+                       placeholder="Enter password"
+                       autocomplete="new-password"
+                       required>
+                <button type="button" class="toggle-password"
+                        aria-label="Show password"
+                        aria-pressed="false"
+                        onclick="togglePassword('password', this)">&#128065;</button>
+            </div>
+            <small class="hint">
+                Use 6–15 characters, including uppercase, lowercase,
+                a number and a special character.
+            </small>
+        </div>
+
+        <div class="form-group">
+            <label for="confirmPassword">Confirm Password:</label>
+            <div class="password-wrapper">
+                <input type="password" id="confirmPassword"
+                       name="confirmPassword"
+                       placeholder="Confirm password"
+                       autocomplete="new-password"
+                       required>
+                <button type="button" class="toggle-password"
+                        aria-label="Show confirm password"
+                        aria-pressed="false"
+                        onclick="togglePassword('confirmPassword', this)">&#128065;</button>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="age">Age:</label>
+            <input type="number" id="age" name="age"
+                   min="16" max="30"
+                   placeholder="Enter age" required>
+        </div>
+
+        <div class="form-group">
+            <label>Gender:</label>
+            <div class="radio-group">
+                <input type="radio" id="male" name="gender" value="Male" required>
+                <label for="male">Male</label>
+
+                <input type="radio" id="female" name="gender" value="Female">
+                <label for="female">Female</label>
+
+                <input type="radio" id="other" name="gender" value="Other">
+                <label for="other">Other</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="mobile">Mobile Number:</label>
+            <input type="tel" id="mobile" name="mobile"
+                   maxlength="10"
+                   placeholder="Enter 10-digit mobile number"
+                   required>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email"
+                   placeholder="example@gmail.com"
+                   autocomplete="email" required>
+        </div>
+
+        <div class="form-group">
+            <label for="address">Address:</label>
+            <textarea id="address" name="address"
+                      placeholder="Enter your address" required></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="semester">Current Semester:</label>
+            <select id="semester" name="semester" required>
+                <option value="">Select Semester</option>
+                <option value="1">Semester 1</option>
+                <option value="2">Semester 2</option>
+                <option value="3">Semester 3</option>
+                <option value="4">Semester 4</option>
+                <option value="5">Semester 5</option>
+                <option value="6">Semester 6</option>
+                <option value="7">Semester 7</option>
+                <option value="8">Semester 8</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="year">Current Year:</label>
+            <select id="year" name="year" required>
+                <option value="">Select Year</option>
+                <option value="1">1st Year</option>
+                <option value="2">2nd Year</option>
+                <option value="3">3rd Year</option>
+                <option value="4">4th Year</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="section">Section:</label>
+            <select id="section" name="section" required>
+                <option value="">Select Section</option>
+                <option value="A">Section A</option>
+                <option value="B">Section B</option>
+                <option value="C">Section C</option>
+                <option value="D">Section D</option>
+                <option value="E">Section E</option>
+                <option value="F">Section F</option>
+                <option value="G">Section G</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="branch">Branch:</label>
+            <select id="branch" name="branch" required>
+                <option value="">Select Branch</option>
+                <option value="CSE">Computer Science and Engineering</option>
+                <option value="ECE">Electronics and Communication Engineering</option>
+                <option value="EEE">Electrical and Electronics Engineering</option>
+                <option value="MECH">Mechanical Engineering</option>
+                <option value="CIVIL">Civil Engineering</option>
+            </select>
+        </div>
+
+        <div class="buttons">
+            <input type="submit" value="Register">
+            <input type="reset" value="Reset">
+        </div>
+
+    </form>
+
+    <p class="login-link">
+        Already have an account?
+        <a href="login.jsp">Login here</a>
+    </p>
+
+</div>
+
+<script>
+    function togglePassword(fieldId, button) {
+        const field = document.getElementById(fieldId);
+        const isHidden = field.type === "password";
+
+        field.type = isHidden ? "text" : "password";
+        button.setAttribute("aria-pressed", String(isHidden));
+        button.setAttribute(
+            "aria-label",
+            isHidden ? "Hide password" : "Show password"
+        );
+    }
+
+    function validateForm() {
+        const firstName =
+            document.getElementById("firstName").value.trim();
+
+        const lastName =
+            document.getElementById("lastName").value.trim();
+
+        const rollNumber =
+            document.getElementById("rollNumber").value.trim();
+
+        const password =
+            document.getElementById("password").value;
+
+        const confirmPassword =
+            document.getElementById("confirmPassword").value;
+
+        const age =
+            document.getElementById("age").value;
+
+        const mobile =
+            document.getElementById("mobile").value.trim();
+
+        const email =
+            document.getElementById("email").value.trim();
+
+        if (!firstName || !lastName) {
+            alert("Please enter your first and last name.");
+            return false;
+        }
+
+        if (!/^24761A05[0-9]{2}$/.test(rollNumber)) {
+            alert("Roll number must start with 24761A05 and end with exactly two digits. Example: 24761A0511.");
+            return false;
+        }
+
+        const passwordPattern =
+            /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[^A-Za-z0-9]).{6,15}$/;
+
+        if (!passwordPattern.test(password)) {
+            alert("Password must be 6–15 characters long and contain uppercase, lowercase, a number and a special character.");
+            return false;
+        }
+
+        if (!confirmPassword) {
+            alert("Please confirm your password.");
+            return false;
+        }
+
+        if (password !== confirmPassword) {
+            alert("Passwords do not match.");
+            return false;
+        }
+
+        if (age === "" || Number(age) < 16 || Number(age) > 30) {
+            alert("Please enter a valid age between 16 and 30.");
+            return false;
+        }
+
+        if (!/^[0-9]{10}$/.test(mobile)) {
+            alert("Please enter a valid 10-digit mobile number.");
+            return false;
+        }
+
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+            alert("Please enter a valid email address.");
+            return false;
+        }
+
+        // The server handles the actual registration result.
+        return true;
+    }
+</script>
+
+</body>
+</html>
